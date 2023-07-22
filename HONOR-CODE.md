@@ -1,16 +1,20 @@
 # Honor Code
 
-> Author: [杨哲涵](https://git.tsinghua.edu.cn/yangzheh22)
+> [杨哲涵](https://git.tsinghua.edu.cn/yangzheh22)
 
-Projects I have used for design inspiration are as follows:
+## 我参考了这些项目
 
 1. [Wordle - The New York Times](https://www.nytimes.com/games/wordle/index.html)
+    - 我用它来了解 Wordle 的玩法
+    - 在开发 GUI 界面的时候，我使用浏览器开发工具查看它的源代码，以便接近原版体验
 
-Blogs I have read in problem shooting are as follows:
+## 我阅读了这些资料
 
 1. [What is the way to inherit std::string right?](https://stackoverflow.com/questions/20512547/what-is-the-way-to-inherit-stdstring-right)
 2. [Uses and Abuses of Inheritance, Part 1](http://www.gotw.ca/publications/mill06.htm)
+3. [WebAssembly](https://developer.mozilla.org/zh-CN/docs/WebAssembly)
 
-I have asked these students for help on certain topics:
 
-1. 戴英杰，熊泽恩：I had a short discussion with each of them about whether it's best practice to inherit from STL templates, when attempting to extend member functions of std::string, no code exchanged. 23/07/02
+## 我与这些同学进行过讨论
+
+1. 戴英杰，熊泽恩：我们讨论了重载 `std::string` 是否合适，没有交换代码. 23/07/02
