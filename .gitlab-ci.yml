@@ -1,0 +1,9 @@
+wordle:
+  stage: deploy
+  script:
+    - emcc -O3 -s WASM=1 -s "EXPORTED_RUNTIME_METHODS=['cwrap']" api.cpp
+    - cp index.html ${TENCENT_WORKDING_DIR}
+    - cp a.out.js ${TENCENT_WORKDING_DIR}
+    - cp a.out.wasm ${TENCENT_WORKDING_DIR}
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
