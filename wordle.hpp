@@ -1,3 +1,6 @@
+#ifndef __WORDLE_HPP__
+#define __WORDLE_HPP__
+
 #include <set>
 #include <string>
 #include <fstream>
@@ -5,10 +8,14 @@
 #include <vector>
 #include <iomanip>
 
-#include <emscripten/emscripten.h>
+#include "emscripten/emscripten.h"
+
+#include "builtin_words.hpp"
 
 #define LETTERS_NUM 26
 #define WORD_LENGTH 5
+#define ACC_NUM 12972
+#define FIN_NUM 2315
 
 namespace cordle
 {
@@ -60,7 +67,7 @@ namespace cordle
     {
     public:
         // Initialize final_set and acceptable_set from specific files
-        WordSet(const std::string final_file_path, const std::string acceptable_file_path);
+        WordSet();
         // Return true if a word is in FINAL.txt, i.e. final set
         bool in_final_set(std::string word);
         // Return true if a word is in ACC.txt, i.e. acceptable set
@@ -95,11 +102,9 @@ namespace cordle
         friend class OJTest;
 
     private:
-        Keyboard *keyboard;
         WordSet *word_set;
         bool hit_restrict[5];
         std::set<char> use_resctrit;
-        bool is_success;
         bool is_hard;
         //! Is counted until first successful trial
         int success_cnt;
@@ -109,19 +114,22 @@ namespace cordle
         std::vector<std::string> results;
         // The specified answer
         std::string answer;
-        // Set the answer to a given string
-        void set_answer(const std::string ans);
         // Called when a round ended and store player statistics
         void evaluate(cordle::Player *player);
 
     public:
-        Round(const std::string final_file_path, const std::string acceptable_file_path, const bool if_hard);
+        Round();
         ~Round();
+        bool is_success;
+        Keyboard *keyboard;
         //! Will be functional in hard mode
         //* Return true if a guess statisfies restriction
         bool is_valid(std::string guess);
         //! It will insert string of G, Y, R and X to results and possibly make modifications to keys' status of keyboard
         std::string take_a_guess(std::string guess);
+        void set_hardness(bool is_hard);
+        // Set the answer to a given string
+        void set_answer(const std::string ans);
     };
     //* This class is designed for passing the OJ, and will not be used elsewhere
     class OJTest
@@ -145,22 +153,16 @@ namespace cordle
     };
 }
 
-cordle::WordSet::WordSet(const std::string final_file_path, const std::string acceptable_file_path)
+cordle::WordSet::WordSet()
 {
-    std::ifstream FINAL_FILE;
-    FINAL_FILE.open(final_file_path, std::ifstream::in);
-    while (!FINAL_FILE.eof())
+    for (int i = 0; i < ACC_NUM; i++)
     {
-        std::string str;
-        FINAL_FILE >> str;
-        final_set.insert(str);
+        char *str = acc[i];
+        acceptable_set.insert(str);
     }
-    std::ifstream ACCEPTABLE_FILE;
-    ACCEPTABLE_FILE.open(acceptable_file_path, std::ifstream::in);
-    while (!ACCEPTABLE_FILE.eof())
+    for (int i = 0; i < FIN_NUM; i++)
     {
-        std::string str;
-        ACCEPTABLE_FILE >> str;
+        char *str = final[i];
         acceptable_set.insert(str);
     }
 }
@@ -234,7 +236,7 @@ void cordle::OJTest::test()
     cordle::Player player = Player();
     do
     {
-        Round single_round = Round(final_file_path, acceptable_file_path, is_hard); //! is_hard controls whether in restricted mode or not, i.e. hard mode
+        Round single_round = Round(); //! is_hard controls whether in restricted mode or not, i.e. hard mode
         std::getline(std::cin, ans);
         while (!single_round.word_set->in_final_set(ans))
         {
@@ -245,7 +247,7 @@ void cordle::OJTest::test()
         std::getline(std::cin, guess);
         while (single_round.guesses.size() < 6 && guess != "")
         {
-            if (single_round.word_set->in_acceptable_set(guess) && single_round.is_valid(guess))
+            if (single_round.is_valid(guess))
             {
                 single_round.take_a_guess(guess);
                 oj_print(&single_round);
@@ -302,13 +304,17 @@ void cordle::Player::update_info(int attempts, bool is_success)
     attempts_per_round.push_back(attempts);
     success_per_round.push_back(is_success);
 }
-cordle::Round::Round(const std::string final_file_path, const std::string acceptable_file_path, const bool if_hard)
+void cordle::Round::set_hardness(bool if_hard)
+{
+    is_hard = if_hard;
+}
+cordle::Round::Round()
 {
     keyboard = new Keyboard();
-    word_set = new WordSet(final_file_path, acceptable_file_path);
+    word_set = new WordSet();
     is_success = false;
     success_cnt = 0;
-    is_hard = if_hard;
+    is_hard = false;
     for (int index = 0; index < WORD_LENGTH; index++)
         hit_restrict[index] = 0;
 }
@@ -380,6 +386,8 @@ void cordle::Round::evaluate(cordle::Player *player)
 }
 bool cordle::Round::is_valid(std::string guess)
 {
+    if (!word_set->in_acceptable_set(guess))
+        return false;
     if (!is_hard)
         return true;
     if (results.size() == 0)
@@ -394,7 +402,4 @@ bool cordle::Round::is_valid(std::string guess)
     return true;
 }
 
-int main()
-{
-    return 0;
-}
+#endif

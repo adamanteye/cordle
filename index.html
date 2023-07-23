@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-us">
 
 <head>
     <meta charset="utf-8">
+    <meta content="text/html; charset=utf-8" http-equiv=Content-Type>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@800&display=swap" rel="stylesheet">
@@ -283,8 +284,22 @@
             </div>
         </div>
     </main>
+    <script src=a.out.js></script>
+
     <script>
+
+        Module.onRuntimeInitialized = _ => {
+            const cdl_init = Module.cwrap('cdl_init', 'null', ['number']);
+            const cdl_is_success= Module.cwrap('cdl_is_success', 'number', ['number']);
+            const cdl_set_mode= Module.cwrap('cdl_set_mode', 'null', ['number']);
+            const cdl_is_vaild= Module.cwrap('cdl_is_vaild', 'number', ['number']);
+            const cdl_take_guess= Module.cwrap('cdl_take_guess','null' , ['string']);
+            const cdl_get_input_status= Module.cwrap('cdl_get_input_status','number' , ['number']);
+            const cdl_get_keyboard_status= Module.cwrap('cdl_get_keyboard_status','number' , ['number']);
+        };
+
     </script>
+
 
 </body>
 
