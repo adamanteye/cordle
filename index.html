@@ -18,7 +18,7 @@
             display: flex;
             flex-direction: row;
             align-items: center;
-            justify-content: flex-start;
+            justify-content: space-between;
             flex-wrap: nowrap;
             padding: 20px;
             border-bottom-color: rgb(211, 214, 218);
@@ -30,7 +30,7 @@
 
         #AppHeader-title {
             text-align: center;
-            margin: 10px auto;
+            margin-left: -15px;
             font-size: 34px;
         }
 
@@ -42,7 +42,6 @@
             --color-default: #ffffff;
             --color-black: #000000;
         }
-
 
         #InputArea {
             display: grid;
@@ -57,7 +56,7 @@
         .InputArea-row {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
-            gap: 5px;
+            gap: 6px;
         }
 
         .InputArea-char {
@@ -177,6 +176,65 @@
             text-align: center;
             margin: 90px auto;
         }
+
+        .cmn-toggle {
+            position: absolute;
+            margin-left: -9999px;
+            visibility: hidden;
+        }
+
+        .cmn-toggle+label {
+            display: block;
+            position: relative;
+            cursor: pointer;
+            outline: none;
+            user-select: none;
+        }
+
+        input.cmn-toggle-round-flat+label {
+            padding: 2px;
+            width: 40px;
+            height: 20px;
+            background-color: var(--color-black);
+            border-radius: 20px;
+            transition: background 0.4s;
+        }
+
+        input.cmn-toggle-round-flat+label:before,
+        input.cmn-toggle-round-flat+label:after {
+            display: block;
+            position: absolute;
+            content: "";
+        }
+
+        input.cmn-toggle-round-flat+label:before {
+            top: 2px;
+            left: 2px;
+            bottom: 2px;
+            right: 2px;
+            background-color: var(--color-default);
+            border-radius: 20px;
+            transition: background 0.4s;
+        }
+
+        input.cmn-toggle-round-flat+label:after {
+            top: 4px;
+            left: 4px;
+            bottom: 4px;
+            width: 17px;
+            background-color: var(--color-black);
+            border-radius: 17px;
+            transition: margin 0.4s, background 0.4s;
+        }
+
+        input.cmn-toggle-round-flat:checked+label {
+            background-color: var(--color-black)
+        }
+
+        input.cmn-toggle-round-flat:checked+label:after {
+            margin-left: 20px;
+            background-color: var(--color-black);
+        }
     </style>
 </head>
 
@@ -184,6 +242,10 @@
 
 <body>
     <header id="AppHeader">
+        <div class="AppHeader-switch">
+            <input id="HardmodeSwitch" class="cmn-toggle cmn-toggle-round-flat" type="checkbox">
+            <label for="HardmodeSwitch"></label>
+        </div>
         <div id="AppHeader-title">Cordle</div>
         <div id="AppHeader-repo"><a href="https://git.tsinghua.edu.cn/yangzheh22/cordle"><img src="assets/git.svg"
                     width="26"></a></div>
@@ -343,13 +405,15 @@
             const inputAreaChars = document.querySelectorAll('.InputArea-char');
             const keyboardButtons = document.querySelectorAll(".Keyboard-button")
 
+            const hardmodeSwitch = document.getElementById("HardmodeSwitch");
+
             let currentIndex = 0;
             let protectedIndex = 0;
             let isSubmit = false;
             let isLock = false;
             cdl_init(Math.floor(Math.random() * 2400));
+            cdl_set_mode(0); //easy mode
             console.log(cdl_show_answer());
-
             function showMessage(message) {
                 let messageBox = document.getElementById("Message");
                 messageBox.children[0].textContent = message;
@@ -414,18 +478,18 @@
                             }
 
                             if (cdl_is_success()) {
-                                isLock=true;
+                                isLock = true;
                                 showMessage("You Win!");
                             } else if (currentIndex == 30) {
-                                isLock=true;
+                                isLock = true;
                                 let message = cdl_show_answer();
-                                message = "Correct Answer" + message.toUpperCase();
+                                message = "Correct Answer: " + message.toUpperCase();
                                 showMessage(message)
                             } else {
                             }
                         }
                         else {
-                            showMessage("Not in word list");
+                            showMessage("Invalid!");
                         }
                     }
                 }
@@ -442,6 +506,16 @@
                 });
             });
 
+            hardmodeSwitch.addEventListener("change", function () {
+                if (this.checked) {
+                    showMessage("Hard mode is on!");
+                    cdl_set_mode(1);
+                }
+                else {
+                    showMessage("Hard mode is off!");
+                    cdl_set_mode(0);
+                }
+            })
         };
 
 

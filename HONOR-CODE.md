@@ -17,6 +17,7 @@
 4. [HTML（超文本标记语言）](https://developer.mozilla.org/zh-CN/docs/Web/HTML)
 5. [浏览器中执行 C 语言？WebAssembly 实践](https://zhuanlan.zhihu.com/p/101686085)
 6. [Emscripting a C library to Wasm](https://web.dev/emscripting-a-c-library/)
+7. [web前端入门到实战：CSS实现开关按钮三例](https://zhuanlan.zhihu.com/p/96382007)
 
 ## 我与这些同学进行过讨论
 
