@@ -13,8 +13,14 @@
 1. [What is the way to inherit std::string right?](https://stackoverflow.com/questions/20512547/what-is-the-way-to-inherit-stdstring-right)
 2. [Uses and Abuses of Inheritance, Part 1](http://www.gotw.ca/publications/mill06.htm)
 3. [WebAssembly](https://developer.mozilla.org/zh-CN/docs/WebAssembly)
+4. [HTML（超文本标记语言）](https://developer.mozilla.org/zh-CN/docs/Web/HTML)
 
 
 ## 我与这些同学进行过讨论
 
 1. 戴英杰，熊泽恩：我们讨论了重载 `std::string` 是否合适，没有交换代码. 23/07/02
+
+## 我使用了这些资源
+
+1. [Bitter](https://fonts.google.com/specimen/Bitter) 字体
+2. [git](https://gitlab.com/gitlab-org/gitlab-svgs/-/blob/main/sprite_icons/git.svg) 图标
