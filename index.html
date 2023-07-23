@@ -146,8 +146,8 @@
             -webkit-user-select: none;
             -moz-user-select: none;
             user-select: none;
-            background-color: var(--color-unknown);
             color: var(--color-black);
+            background-color: var(--color-unknown);
             flex: 1;
             display: flex;
             justify-content: center;
@@ -317,7 +317,7 @@
             const cdl_set_mode = Module.cwrap('cdl_set_mode', 'null', ['number']);
             const cdl_is_valid = Module.cwrap('cdl_is_valid', 'number', ['string']);
             const cdl_take_guess = Module.cwrap('cdl_take_guess', 'string', ['string']);
-            const cdl_get_keyboard_status = Module.cwrap('cdl_get_keyboard_status', 'number', ['number']);
+            const cdl_get_keyboard_status = Module.cwrap('cdl_get_keyboard_status', 'string', ['string']);
             const cdl_show_answer = Module.cwrap('cdl_show_answer', 'string', ['null']);
 
             const inputAreaChars = document.querySelectorAll('.InputArea-char');
@@ -326,7 +326,7 @@
             let currentIndex = 0;
             let protectedIndex = 0;
             let isSubmit = false;
-            cdl_init(2);
+            cdl_init(Math.floor(Math.random() * 2400));
             console.log(cdl_show_answer());
             function updateKeyBoard() {
                 inputAreaChars[currentIndex - 5].classList.remove('InputArea-input')
@@ -350,7 +350,6 @@
                         console.log(res);
                         for (let i = 5; i >= 1; i--) {
                             inputAreaChars[currentIndex - i].classList.remove('InputArea-input');
-
                             switch (res[5 - i]) {
                                 case 'G':
                                     inputAreaChars[currentIndex - i].classList.add('InputArea-hit');
@@ -366,8 +365,34 @@
                                     break;
                             }
                         }
-                    } else {
+                        let status = cdl_get_keyboard_status(guess);
+                        console.log(guess);
+                        console.log(status);
+                        for (let i = 0; i < 5; i++) {
+                            let keyButton = document.querySelector(`[data-key="${guess[i]}"]`);
+                            console.log(status[i])
+                            switch (status[i]) {
+                                case 'G':
+                                    keyButton.style.backgroundColor = "var(--color-hit)";
+                                    keyButton.style.color = "var(--color-default)";
+                                    break;
+                                case 'Y':
+                                    keyButton.style.backgroundColor = "var(--color-close)";
+                                    keyButton.style.color = "var(--color-default)";
+                                    break;
+                                case 'R':
+                                    keyButton.style.backgroundColor = "var(--color-missed)";
+                                    keyButton.style.color = "var(--color-default)";
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
 
+                        if (cdl_is_success()) {//Show message that congratulates the winner
+                        } else if (currentIndex == 30) {// Show message that you fail and the correct answer
+                        } else {// Do nothing
+                        }
                     }
                 }
             }
@@ -380,7 +405,6 @@
             keyboardButtons.forEach(button => {
                 button.addEventListener("click", () => {
                     const key = button.getAttribute("data-key");
-                    console.log(`press key: ${key}`);
                     handleKeyPress(key)
                 });
             });

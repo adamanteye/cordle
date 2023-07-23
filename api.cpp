@@ -13,8 +13,9 @@ void initRandom(int seed)
 
 cordle::Player *cdl_player = nullptr;
 cordle::Round *cdl_round = nullptr;
-char guess_res[6];
-char tmp[6];
+char res_tmp[6];
+char ans_tmp[6];
+char keys_tmp[6];
 std::string ans;
 #ifdef __cplusplus
 extern "C"
@@ -51,28 +52,46 @@ extern "C"
         guess[3] = str[3];
         guess[4] = str[4];
         guess = cdl_round->take_a_guess(guess);
-        guess_res[0] = guess[0];
-        guess_res[1] = guess[1];
-        guess_res[2] = guess[2];
-        guess_res[3] = guess[3];
-        guess_res[4] = guess[4];
-        return guess_res;
+        res_tmp[0] = guess[0];
+        res_tmp[1] = guess[1];
+        res_tmp[2] = guess[2];
+        res_tmp[3] = guess[3];
+        res_tmp[4] = guess[4];
+        return res_tmp;
     }
     EMSCRIPTEN_KEEPALIVE
     char *cdl_show_answer()
     {
         std::string guess = cdl_round->answer;
-        tmp[0] = guess[0];
-        tmp[1] = guess[1];
-        tmp[2] = guess[2];
-        tmp[3] = guess[3];
-        tmp[4] = guess[4];
-        return tmp;
+        ans_tmp[0] = guess[0];
+        ans_tmp[1] = guess[1];
+        ans_tmp[2] = guess[2];
+        ans_tmp[3] = guess[3];
+        ans_tmp[4] = guess[4];
+        return ans_tmp;
     }
     EMSCRIPTEN_KEEPALIVE
-    int cdl_get_keyboard_status(int key)
+    char *cdl_get_keyboard_status(char *keys)
     {
-        return cdl_round->keyboard->get_status(key);
+        for (int i = 0; i < 5; i++)
+        {
+            switch (cdl_round->keyboard->get_status(keys[i]))
+            {
+            case 0:
+                keys_tmp[i] = 'G';
+                break;
+            case 1:
+                keys_tmp[i] = 'Y';
+                break;
+            case 2:
+                keys_tmp[i] = 'R';
+                break;
+            default:
+                keys_tmp[i] = 'X';
+                break;
+            };
+        }
+        return keys_tmp;
     }
     EMSCRIPTEN_KEEPALIVE
     void cdl_init(int seed)
