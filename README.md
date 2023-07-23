@@ -6,7 +6,7 @@
 
 ## 编译
 
-`emcc -O3 -s WASM=1 -s "EXPORTED_RUNTIME_METHODS=['cwrap']" --shell-file html_template/shell_minimal.html api.cpp`
+`emcc -O3 -s WASM=1 -s "EXPORTED_RUNTIME_METHODS=['cwrap']" api.cpp`
 
 ## 运行
 
