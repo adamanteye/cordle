@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@800&display=swap" rel="stylesheet">
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding: 0;
+            border: 0;
+        }
+
+        #AppHeader {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start;
+            flex-wrap: nowrap;
+            padding: 20px;
+            border-bottom-color: rgb(211, 214, 218);
+            border-bottom-style: solid;
+            border-bottom-width: 1px;
+            height: 40px;
+            font-family: "Bitter", Arial, sans-serif;
+        }
+
+        #AppHeader-title {
+            text-align: center;
+            margin: 10px auto;
+            font-size: 34px;
+        }
+
+        :root {
+            --color-hit: #6aaa64;
+            --color-close: #c9b458;
+            --color-missed: #787c7e;
+            --color-unknown: #d3d6da;
+            --color-default: #ffffff;
+            --color-black: #000000;
+        }
+
+
+        #InputArea {
+            display: grid;
+            margin-bottom: 10px;
+            grid-template-rows: repeat(6, 1fr);
+            gap: 5px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .InputArea-row {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 5px;
+        }
+
+
+        .InputArea-char {
+            background-color: var(--color-default);
+            color: var(--color-default);
+            text-transform: uppercase;
+            width: 100%;
+            line-height: 1;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            font-weight: bold;
+            box-sizing: border-box;
+            vertical-align: middle;
+            user-select: none;
+            border: 2px solid var(--color-unknown);
+        }
+
+        #Game {
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            margin: 10px auto;
+            flex-direction: column;
+        }
+
+        #Game-input {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-grow: 1;
+            overflow: hidden;
+        }
+
+        #Keyboard {
+            height: 200px;
+            margin: 0 8px;
+            user-select: none;
+        }
+
+        .Keyboard-row {
+            display: flex;
+            width: 100%;
+            margin: 0 auto 8px;
+            touch-action: manipulation;
+        }
+
+        .Keyboard-spacer {
+            flex: .5;
+        }
+
+        .Keyboard-button {
+            font-size: 1.25em;
+            font-weight: bold;
+            border: 0;
+            padding: 0;
+            margin: 0 6px 0 0;
+            height: 58px;
+            border-radius: 4px;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+            background-color: var(--color-unknown);
+            color: var(--color-black);
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-transform: uppercase;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, .3);
+        }
+
+        .Keyboard-button-oneplushalf {
+            flex: 1.5;
+            font-size: 12px;
+        }
+    </style>
+</head>
+
+<title>Cordle - Adamanteye</title>
+
+<body>
+    <header id="AppHeader">
+        <div id="AppHeader-title">Cordle</div>
+        <div id="AppHeader-repo"><a href="https://git.tsinghua.edu.cn/yangzheh22/cordle"><img src="assets/git.svg" width="28"></a></div>
+    </header>
+    <main>
+        <div id="Game">
+            <div id="Game-input">
+                <div id="InputArea" style="width: 350px;height: 420px;">
+                    <div class="InputArea-row">
+                        <div class="InputArea-char" style=" animation-delay: 0ms">
+                        </div>
+                        <div class="InputArea-char" style=" animation-delay: 100ms">
+                        </div>
+                        <div class="InputArea-char" style=" animation-delay: 200ms">
+                        </div>
+                        <div class="InputArea-char" style=" animation-delay: 300ms">
+                        </div>
+                        <div class="InputArea-char" style=" animation-delay: 400ms">
+                        </div>
+                    </div>
+                    <div class="InputArea-row">
+                        <div class="InputArea-char" style=" animation-delay: 0ms">
+                        </div>
+                        <div class="InputArea-char" style=" animation-delay: 100ms">
+                        </div>
+                        <div class="InputArea-char" style=" animation-delay: 200ms">
+                        </div>
+                        <div class="InputArea-char" style=" animation-delay: 300ms">
+                        </div>
+                        <div class="InputArea-char" style=" animation-delay: 400ms">
+                        </div>
+                    </div>
+                    <div class="InputArea-row">
+                        <div class="InputArea-char" style=" animation-delay: 0ms">
+                        </div>
+                        <div class="InputArea-char" style=" animation-delay: 100ms">
+                        </div>
+                        <div class="InputArea-char" style=" animation-delay: 200ms">
+                        </div>
+                        <div class="InputArea-char" style=" animation-delay: 300ms">
+                        </div>
+                        <div class="InputArea-char" style=" animation-delay: 400ms">
+                        </div>
+                    </div>
+                    <div class="InputArea-row">
+                        <div class="InputArea-char" style=" animation-delay: 0ms">
+                        </div>
+                        <div class="InputArea-char" style=" animation-delay: 100ms">
+                        </div>
+                        <div class="InputArea-char" style=" animation-delay: 200ms">
+
+                        </div>
+                        <div class="InputArea-char" style=" animation-delay: 300ms">
+
+                        </div>
+                        <div class="InputArea-char" style=" animation-delay: 400ms">
+
+                        </div>
+                    </div>
+                    <div class="InputArea-row">
+                        <div class="InputArea-char" style=" animation-delay: 0ms">
+
+                        </div>
+                        <div class="InputArea-char" style=" animation-delay: 100ms">
+
+                        </div>
+                        <div class="InputArea-char" style=" animation-delay: 200ms">
+
+                        </div>
+                        <div class="InputArea-char" style=" animation-delay: 300ms">
+
+                        </div>
+                        <div class="InputArea-char" style=" animation-delay: 400ms">
+
+                        </div>
+                    </div>
+                    <div class="InputArea-row">
+                        <div class="InputArea-char" style=" animation-delay: 0ms">
+                        </div>
+                        <div class="InputArea-char" style=" animation-delay: 100ms">
+
+                        </div>
+                        <div class="InputArea-char" style=" animation-delay: 200ms">
+
+                        </div>
+                        <div class="InputArea-char" style=" animation-delay: 300ms">
+
+                        </div>
+                        <div class="InputArea-char" style=" animation-delay: 400ms">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="Keyboard">
+                <div class="Keyboard-row">
+                    <button type="button" data-key="q" class="Keyboard-button">q</button>
+                    <button type="button" data-key="w" class="Keyboard-button">w</button>
+                    <button type="button" data-key="e" class="Keyboard-button">e</button>
+                    <button type="button" data-key="r" class="Keyboard-button">r</button>
+                    <button type="button" data-key="t" class="Keyboard-button">t</button>
+                    <button type="button" data-key="y" class="Keyboard-button">y</button>
+                    <button type="button" data-key="u" class="Keyboard-button">u</button>
+                    <button type="button" data-key="i" class="Keyboard-button">i</button>
+                    <button type="button" data-key="o" class="Keyboard-button">o</button>
+                    <button type="button" data-key="p" class="Keyboard-button">p</button>
+                </div>
+                <div class="Keyboard-row">
+                    <div class="Keyboard-spacer"></div>
+                    <button type="button" data-key="a" class="Keyboard-button">a</button>
+                    <button type="button" data-key="s" class="Keyboard-button">s</button>
+                    <button type="button" data-key="d" class="Keyboard-button">d</button>
+                    <button type="button" data-key="f" class="Keyboard-button">f</button>
+                    <button type="button" data-key="g" class="Keyboard-button">g</button>
+                    <button type="button" data-key="h" class="Keyboard-button">h</button>
+                    <button type="button" data-key="j" class="Keyboard-button">j</button>
+                    <button type="button" data-key="k" class="Keyboard-button">k</button>
+                    <button type="button" data-key="l" class="Keyboard-button">l</button>
+                    <div class="Keyboard-spacer"></div>
+                </div>
+                <div class="Keyboard-row">
+                    <button type="button" data-key="↵"
+                        class="Keyboard-button Keyboard-button-oneplushalf">enter</button>
+                    <button type="button" data-key="z" class="Keyboard-button">z</button>
+                    <button type="button" data-key="x" class="Keyboard-button">x</button>
+                    <button type="button" data-key="c" class="Keyboard-button">c</button>
+                    <button type="button" data-key="v" class="Keyboard-button">v</button>
+                    <button type="button" data-key="b" class="Keyboard-button">b</button>
+                    <button type="button" data-key="n" class="Keyboard-button">n</button>
+                    <button type="button" data-key="m" class="Keyboard-button">m</button>
+                    <button type="button" data-key="←"  class="Keyboard-button Keyboard-button-oneplushalf"><svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="20" class="game-icon" data-testid="icon-backspace"><path fill="var(--color-black)" d="M22 3H7c-.69 0-1.23.35-1.59.88L0 12l5.41 8.11c.36.53.9.89 1.59.89h15c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H7.07L2.4 12l4.66-7H22v14zm-11.59-2L14 13.41 17.59 17 19 15.59 15.41 12 19 8.41 17.59 7 14 10.59 10.41 7 9 8.41 12.59 12 9 15.59z"></path></svg></button>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+    </script>
+
+</body>
+
+</html>
