@@ -6,7 +6,7 @@
 
 1. [Wordle - The New York Times](https://www.nytimes.com/games/wordle/index.html)
     - 我用它来了解 Wordle 的玩法
-    - 在开发 GUI 界面的时候，我使用浏览器开发工具查看它的源代码，以便接近原版体验
+    - 在开发 GUI 界面的时候，我使用浏览器开发工具查看它的源代码，以便复刻原版体验
 2. [WebAssembly sample](https://github.com/GoogleChrome/samples/tree/gh-pages/webassembly)
 
 ## 我阅读了这些资料

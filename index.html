@@ -59,7 +59,6 @@
             gap: 5px;
         }
 
-
         .InputArea-char {
             background-color: var(--color-default);
             color: var(--color-default);
@@ -74,6 +73,31 @@
             box-sizing: border-box;
             vertical-align: middle;
             user-select: none;
+            border: 2px solid var(--color-unknown);
+        }
+
+        .InputArea-input {
+            background-color: var(--color-missed);
+            border: 2px solid var(--color-missed);
+        }
+
+        .InputArea-hit {
+            background-color: var(--color-hit);
+            border: 2px solid var(--color-hit);
+        }
+
+        .InputArea-close {
+            background-color: var(--color-close);
+            border: 2px solid var(--color-close);
+        }
+
+        .InputArea-missed {
+            background-color: var(--color-missed);
+            border: 2px solid var(--color-missed);
+        }
+
+        .InputArea-unknown {
+            background-color: var(--color-unknown);
             border: 2px solid var(--color-unknown);
         }
 
@@ -151,7 +175,7 @@
         <div id="Game">
             <div id="Game-input">
                 <div id="InputArea" style="width: 350px;height: 420px;">
-                    <div class="InputArea-row">
+                    <div class="InputArea-row" data-row-id="0">
                         <div class="InputArea-char" style=" animation-delay: 0ms">
                         </div>
                         <div class="InputArea-char" style=" animation-delay: 100ms">
@@ -163,7 +187,7 @@
                         <div class="InputArea-char" style=" animation-delay: 400ms">
                         </div>
                     </div>
-                    <div class="InputArea-row">
+                    <div class="InputArea-row" data-row-id="1">
                         <div class="InputArea-char" style=" animation-delay: 0ms">
                         </div>
                         <div class="InputArea-char" style=" animation-delay: 100ms">
@@ -175,7 +199,7 @@
                         <div class="InputArea-char" style=" animation-delay: 400ms">
                         </div>
                     </div>
-                    <div class="InputArea-row">
+                    <div class="InputArea-row" data-row-id="2">
                         <div class="InputArea-char" style=" animation-delay: 0ms">
                         </div>
                         <div class="InputArea-char" style=" animation-delay: 100ms">
@@ -187,7 +211,7 @@
                         <div class="InputArea-char" style=" animation-delay: 400ms">
                         </div>
                     </div>
-                    <div class="InputArea-row">
+                    <div class="InputArea-row" data-row-id="3">
                         <div class="InputArea-char" style=" animation-delay: 0ms">
                         </div>
                         <div class="InputArea-char" style=" animation-delay: 100ms">
@@ -202,7 +226,7 @@
 
                         </div>
                     </div>
-                    <div class="InputArea-row">
+                    <div class="InputArea-row" data-row-id="4">
                         <div class="InputArea-char" style=" animation-delay: 0ms">
 
                         </div>
@@ -219,7 +243,7 @@
 
                         </div>
                     </div>
-                    <div class="InputArea-row">
+                    <div class="InputArea-row" data-row-id="5">
                         <div class="InputArea-char" style=" animation-delay: 0ms">
                         </div>
                         <div class="InputArea-char" style=" animation-delay: 100ms">
@@ -287,16 +311,82 @@
     <script src=a.out.js></script>
 
     <script>
-
         Module.onRuntimeInitialized = _ => {
             const cdl_init = Module.cwrap('cdl_init', 'null', ['number']);
-            const cdl_is_success= Module.cwrap('cdl_is_success', 'number', ['number']);
-            const cdl_set_mode= Module.cwrap('cdl_set_mode', 'null', ['number']);
-            const cdl_is_vaild= Module.cwrap('cdl_is_vaild', 'number', ['number']);
-            const cdl_take_guess= Module.cwrap('cdl_take_guess','null' , ['string']);
-            const cdl_get_input_status= Module.cwrap('cdl_get_input_status','number' , ['number']);
-            const cdl_get_keyboard_status= Module.cwrap('cdl_get_keyboard_status','number' , ['number']);
+            const cdl_is_success = Module.cwrap('cdl_is_success', 'number', ['number']);
+            const cdl_set_mode = Module.cwrap('cdl_set_mode', 'null', ['number']);
+            const cdl_is_valid = Module.cwrap('cdl_is_valid', 'number', ['string']);
+            const cdl_take_guess = Module.cwrap('cdl_take_guess', 'string', ['string']);
+            const cdl_get_keyboard_status = Module.cwrap('cdl_get_keyboard_status', 'number', ['number']);
+            const cdl_show_answer = Module.cwrap('cdl_show_answer', 'string', ['null']);
+
+            const inputAreaChars = document.querySelectorAll('.InputArea-char');
+            const keyboardButtons = document.querySelectorAll(".Keyboard-button")
+
+            let currentIndex = 0;
+            let protectedIndex = 0;
+            let isSubmit = false;
+            cdl_init(2);
+            console.log(cdl_show_answer());
+            function updateKeyBoard() {
+                inputAreaChars[currentIndex - 5].classList.remove('InputArea-input')
+            }
+            function handleKeyPress(key) {
+                if (/^[a-z]$/.test(key) && currentIndex >= protectedIndex && currentIndex < protectedIndex + 5) {
+                    inputAreaChars[currentIndex].textContent = key;
+                    inputAreaChars[currentIndex].classList.add('InputArea-input');
+                    currentIndex += 1;
+                } else if ((key == 'backspace' || key == '←') && currentIndex > protectedIndex) {
+                    currentIndex -= 1;
+                    inputAreaChars[currentIndex].classList.remove('InputArea-input');
+                    inputAreaChars[currentIndex].textContent = "";
+                } else if (key == 'enter' || key == '↵') {
+                    console.log("now enter");
+                    let guess = "";
+                    for (let i = 5; i >= 1; i--) { guess += inputAreaChars[currentIndex - i].textContent; }
+                    if (cdl_is_valid(guess)) {
+                        protectedIndex = currentIndex;
+                        let res = cdl_take_guess(guess);
+                        console.log(res);
+                        for (let i = 5; i >= 1; i--) {
+                            inputAreaChars[currentIndex - i].classList.remove('InputArea-input');
+
+                            switch (res[5 - i]) {
+                                case 'G':
+                                    inputAreaChars[currentIndex - i].classList.add('InputArea-hit');
+                                    break;
+                                case 'Y':
+                                    inputAreaChars[currentIndex - i].classList.add('InputArea-close');
+                                    break;
+                                case 'R':
+                                    inputAreaChars[currentIndex - i].classList.add('InputArea-missed');
+                                    break;
+                                default:
+                                    inputAreaChars[currentIndex - i].classList.add('InputArea-hit');
+                                    break;
+                            }
+                        }
+                    } else {
+
+                    }
+                }
+            }
+
+            window.addEventListener('keydown', (event) => {
+                const key = event.key.toLowerCase();
+                handleKeyPress(key);
+            })
+
+            keyboardButtons.forEach(button => {
+                button.addEventListener("click", () => {
+                    const key = button.getAttribute("data-key");
+                    console.log(`press key: ${key}`);
+                    handleKeyPress(key)
+                });
+            });
+
         };
+
 
     </script>
 

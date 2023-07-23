@@ -112,8 +112,7 @@ namespace cordle
         std::vector<std::string> guesses;
         // Player's guess result stored in a round
         std::vector<std::string> results;
-        // The specified answer
-        std::string answer;
+
         // Called when a round ended and store player statistics
         void evaluate(cordle::Player *player);
 
@@ -122,6 +121,8 @@ namespace cordle
         ~Round();
         bool is_success;
         Keyboard *keyboard;
+        // The specified answer
+        std::string answer;
         //! Will be functional in hard mode
         //* Return true if a guess statisfies restriction
         bool is_valid(std::string guess);
@@ -157,13 +158,11 @@ cordle::WordSet::WordSet()
 {
     for (int i = 0; i < ACC_NUM; i++)
     {
-        char *str = acc[i];
-        acceptable_set.insert(str);
+        acceptable_set.insert(acc[i]);
     }
     for (int i = 0; i < FIN_NUM; i++)
     {
-        char *str = final[i];
-        acceptable_set.insert(str);
+        acceptable_set.insert(final[i]);
     }
 }
 bool cordle::WordSet::in_acceptable_set(std::string word)
