@@ -2,12 +2,17 @@
 
 > [杨哲涵](https://git.tsinghua.edu.cn/yangzheh22)
 
+- 我参考的一些帖子由于数量较多，没有实际使用等原因没有列入
+- 我询问过 ChatGPT，让它对于 GUI 界面，项目管理提出一些建议，但没有采纳它的回答
+
 ## 我参考了这些项目
 
 1. [Wordle - The New York Times](https://www.nytimes.com/games/wordle/index.html)
     - 我用它来了解 Wordle 的玩法
-    - 在开发 GUI 界面的时候，我使用浏览器开发工具查看它的源代码，以便复刻原版体验
-2. [WebAssembly sample](https://github.com/GoogleChrome/samples/tree/gh-pages/webassembly)
+    - 在开发 GUI 界面的时候，我使用浏览器开发工具查看它的源代码，以便复刻原版体验，同时在不熟悉 html css 的情况下快速完成任务
+2. [Wordle - 程序设计训练（Rust）](https://lab.cs.tsinghua.edu.cn/rust/2022/projects/wordle/#20)
+    - 我从中了解到 WebAssembly 的存在，这帮助我确定了使用 WebAssembly 实现需求
+3. [WebAssembly sample](https://github.com/GoogleChrome/samples/tree/gh-pages/webassembly)
 
 ## 我阅读了这些资料
 
@@ -26,4 +31,4 @@
 ## 我使用了这些资源
 
 1. [Bitter](https://fonts.google.com/specimen/Bitter) 字体
-2. [git](https://gitlab.com/gitlab-org/gitlab-svgs/-/blob/main/sprite_icons/git.svg) 图标
+2. [gitlab - git](https://gitlab.com/gitlab-org/gitlab-svgs/-/blob/main/sprite_icons/git.svg) 图标
