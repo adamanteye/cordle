@@ -414,11 +414,11 @@
             cdl_init(Math.floor(Math.random() * 2400));
             cdl_set_mode(0); //easy mode
             console.log(cdl_show_answer());
-            function showMessage(message) {
+            function showMessage(message, dauer) {
                 let messageBox = document.getElementById("Message");
                 messageBox.children[0].textContent = message;
                 messageBox.style.display = "block";
-                setTimeout(function () { let messageBox = document.getElementById("Message"); messageBox.style.display = "none"; }, 2000)
+                setTimeout(function () { let messageBox = document.getElementById("Message"); messageBox.style.display = "none"; }, dauer)
             }
             function updateKeyBoard() {
                 inputAreaChars[currentIndex - 5].classList.remove('InputArea-input')
@@ -479,17 +479,17 @@
 
                             if (cdl_is_success()) {
                                 isLock = true;
-                                showMessage("You Win!");
+                                showMessage("You Win!", 3000);
                             } else if (currentIndex == 30) {
                                 isLock = true;
                                 let message = cdl_show_answer();
                                 message = "Correct Answer: " + message.toUpperCase();
-                                showMessage(message)
+                                showMessage(message, 4000)
                             } else {
                             }
                         }
                         else {
-                            showMessage("Invalid!");
+                            showMessage("Invalid!", 2000);
                         }
                     }
                 }
