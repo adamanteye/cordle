@@ -508,11 +508,11 @@
 
             hardmodeSwitch.addEventListener("change", function () {
                 if (this.checked) {
-                    showMessage("Hard mode is on!");
+                    showMessage("Hard mode is on!", 2000);
                     cdl_set_mode(1);
                 }
                 else {
-                    showMessage("Hard mode is off!");
+                    showMessage("Hard mode is off!", 2000);
                     cdl_set_mode(0);
                 }
             })
