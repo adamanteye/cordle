@@ -10,7 +10,7 @@
 
 ## 运行
 
-`sudo python3 -m http.server 80` 或[在线演示](http://124.220.222.223/cordle)
+`sudo python3 -m http.server 80` 或[在线演示](https://game.thudep22.cn/cordle/)
 
 ## 程序结构和说明
 
